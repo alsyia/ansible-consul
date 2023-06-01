@@ -85,7 +85,11 @@
     "disable_keyring_file": true,
     {% endif %}
     {% if consul_tls_enable | bool %}
+    {% if consul_tls_ca_dir is defined %}
+    "ca_path": "{{ consul_tls_dir }}/{{ consul_tls_ca_dir }}/",
+    {% else %}
     "ca_file": "{{ consul_tls_dir }}/{{ consul_tls_ca_crt | basename }}",
+    {% endif %}
     "cert_file": "{{ consul_tls_dir }}/{{ consul_tls_server_crt | basename }}",
     "key_file": "{{ consul_tls_dir }}/{{ consul_tls_server_key | basename }}",
     "verify_incoming": {{ consul_tls_verify_incoming | bool | to_json }},
